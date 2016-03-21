@@ -1,0 +1,42 @@
+---
+layout: post
+title: Loose Equality vs Strict Equality Operators in JavaScript
+date:   2016-03-19 06:03:00
+tags: JavaScript Operators
+subclass: 'post tag-JavaScript tag-Operators'
+categories: 'javascript'
+navigation: True
+logo: 'assets/images/ghost.png'
+---
+<p>Imagine we are given an array that holds a combination of values from different data types: strings, numbers, objects and even other arrays.
+And We want to filter the number <code>1</code> from the given array. For the sake of simplicity, we can use the built-in filter method of arrays to loop through the array and return the elements that equal to the number 1</p>
+
+{% highlight javascript %}
+  Array.prototype.filter.call(givenArray, function(item) {
+  return item ==1;
+  });
+{% endhighlight %}
+
+<p>This seems like a logical solution.  When we pass this array <code> var combArray = [0, 1, true, '1' [1], false, 4, 5]</code> in to the above function.  We might except a returned array with only one element, since we only have one number <code>1</code> in the array.  Instead we get a returned array of four values instead of one. We also get the boolean, the string and the array equivalents of the number <code>1</code>.</p>This is one of the confusing features in JavaScript that creates surprising results especially for programmers coming from another language.  The confusion lies in the Equality operator<code>==</code>with in the function.  Luckily it can easly be solved by using the other type of equality comparator.  Yes JavaScript has two types of equality Operators, the Strict Equality Operator and the Loose Equality Operator(formally described as the Abstract Equality Algorithm Comparison).</p>
+
+<p>The Loose Equality Operator, denoted by double equal signs(==), compares two values after undergoing type coersion, i.e changing from one type to another, on one or both values being compared.  This coercion happens so
+that both values eventually end up as the same type, which can then
+directly be compared for equality using simple value Identity. For Example <code>1==true</code> returnes <code>true</code>.  Since by convention true and false evaluates to 1 and 0, respectively. Thus the double equals operator coerses true to 1, before it compares the content of both values.</p>
+
+<p>The Strict Equality Operator, denoted by three equal signs(===), only returns true if the two values compared are the same in type and content.  If we try to compare the string <code>"3"</code> and the number <code>3</code> using Strict Equality comparator, we will get a false return. Strict Equality sees we are trying to compare a number type to a string type so it will automatically returns false. Every value compares with itself with triple equals comparator will return true except <code>NaN</code>.  <code>NaN === NaN</code> returns false.</p>
+
+<p>The Strict Equality Operator ensures comparison reliability, especially in a data that have multiple and unknown types.  And it's generally considered the safest way to compare values.  Despite how type coersion can be powerful and has many benefits,  it can cause strange problems that are hard to debug, as in the above filtering function. So It's advised that when it's used, to be mindfull of the many rules that govern type conversion in JavaScript</p>
+<p>Therefore, if we modify the above function to use the strict equality operator, It will give us the expected return value with no suprises.</p>
+
+<p> I include some surprising effects of trying to compare values using the double equals comparator</p>
+
+{% highlight javascript %}
+   console.log(3 =="3")                  // true;
+   console.log(true ==1)                 //true;
+   console.log(0 =="")                   //true;
+   console.log(false ==0)                 //true;
+   console.log([1,2,3] =="1,2,3")         //true;
+   console.log("\n \n \t" ==0)             //true;
+   console.log(undefined ==null)           //true;
+{% endhighlight %}
+
