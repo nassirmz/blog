@@ -1,12 +1,53 @@
 ---
 layout: post
-title: AngularJS Form Validation
+title: AngularJS Form Validation Using ngMessages
 date:   2016-04-28 11:28:00
-tags: JavaScript Operators
-subclass: 'post tag-JavaScript tag-Operators'
+tags: Angular
+subclass: 'post tag-Angular'
 categories: 'javascript'
 navigation: True
 logo: 'assets/images/ghost.png'
 ---
-<p>Angular comes with great built in client-side form validations we can use with our directives.  by decorating your field elements with the correct attributes, angular validation will occur automatically and let you know when the field is valid or invalid.</p>
-<p>
+<p>Angular comes with great built-in form validations we can use with our directives.  by decorating your field elements with the correct attributes, angular validation will occur automatically and let you know when the field is valid or invalid.</p>
+<p>Angular with the release of Angular 1.3, makes it even easier and better to  craft better user experience when building forms using the ngMessages module. ngMessages is a module that comes with two directives to enhance the support for displaying messages in our templates. Prior to ngMessages, if we have to show multiple error messages, we used to use ng-show or ng-if directives for displaying each error message, creating messy and repetitive code. ngMessages will handle showing and hiding specific messages based on the errors helping us not to violate the D.R.Y principle of coding.</p>
+<p>Let's say we want to add validation to our simple login form with username, email, and password input fields:
+After adding ngMessages to our dependencies. Most of our code is going to be in the HTML file.
+We first add name attributes to all input fields and the form itself, also not forgetting to add the 'novalidate' HTML5 attribute to disable the built-in HTML form validation tools.</p>
+
+{% highlight html %}
+<form name="signupForm" novalidate>
+  <input name="username"type="text" ng-model="username">
+  <input name="email" type="email" ng-model="email">
+  <input name="password" placeholder="Password" ng-model="pwd">
+  <input type="submit" value='Submit'>
+</form>
+{% endhighlight %}
+
+<p>For every form, Angular creates an instance of FormController that keeps track of all its controls and the state of them. So the name attribute of the form makes sure the FormController instance is exposed on the scope1. Each of the name attributes of the inputs is added to the current scope and are given boolean properties to describe the state of the input, such as being valid/invalid or dirty/pristine.</p>
+
+<p>Giving the ng-messages directive  an expression that evaluates to an object where each member can control if a certain message id displayed or not, the ng-message directive  is the one responsible for displaying that particular message. The value passed to the ng-message attribute will depend on upon the directives we added to the input field. For instance to Add multiple error messages to the username input field</p>
+{% highlight html %}
+<form name="signupForm" novalidate>
+  <input name="username" type="text" ng-minlength="5" ng-maxlength="10" required>
+  <div ng-messages="signupForm.username.$error">
+    <p ng-message="minlength">Username is too short.</p>
+    <p ng-message="maxlength">Username is too long.</p>
+    <p ng-message="required">Username is required.</p>
+  </div>
+</form>
+{% endhighlight %}
+<p>We can also easly validate a proper email format by specifying the type of the input field. To show an error message when invalid email is entered, We just add an element with ng-directive that is given a value of email.</p>
+{% highlight html %}
+<form name="signupForm" novalidate>
+  <input name="email" type="email" ng-model="email" required>
+  <div ng-messages="signupForm.email.$error" ng-show="signupForm.email.$touched">
+    <p ng-message="required">Email is required</p>
+    <p ng-message="email">Please enter valid email address</p>
+  </div>
+</form>
+{% endhighlight %}
+
+<p>Utilizing ngMessages reduces the amount of code and logic that was used to showcase error messages. Here is the complete simple form that uses ngMessages to validate forms:</p>
+
+<p data-height="368" data-theme-id="dark" data-slug-hash="KrYkLr" data-default-tab="result" data-user="nassir" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/nassir/pen/KrYkLr/">Angular Form Validation</a> by nassir (<a href="http://codepen.io/nassir">@nassir</a>) on <a href="http://codepen.io">CodePen</a>.</p>
+<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
