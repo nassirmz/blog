@@ -12,9 +12,9 @@ logo: 'assets/images/ghost.png'
 And we want to filter the number <code>1</code> from the given array. For the sake of simplicity, we can use the built-in filter method of arrays to loop through the array and return the elements that equal to the number 1.</p>
 
 {% highlight javascript %}
-  Array.prototype.filter.call(givenArray, function(item) {
+Array.prototype.filter.call(givenArray, function(item) {
   return item ==1;
-  });
+});
 {% endhighlight %}
 
 <p>This seems like a logical solution.  When we pass this array <code> var combArray = [0, 1, true, '1' [1], false, 4, 5];</code> in to the above function.  We might except a returned array with only one element, since we only have one number <code>1</code> in the array.  Instead we get a returned array of four elements. We also get the boolean, the string and the array equivalents of the number <code>1</code>.</p>This is one of the confusing features in JavaScript that creates surprising results especially for programmers coming from another language.  The confusion lies in the Equality operator<code>==</code>with in the function.  Luckily it can easly be solved by using the other type of equality comparator.  Yes, JavaScript has two types of equality Operators, the Strict Equality Operator and the Loose Equality Operator(formally described as the Abstract Equality Algorithm Comparison).</p>
@@ -29,12 +29,12 @@ directly be compared for equality using simple value identity. For Example <code
 <p> I include some surprising effects of trying to compare values using the double equals comparator.</p>
 
 {% highlight javascript %}
-   console.log(3 =="3")                  // true;
-   console.log(true ==1)                 //true;
-   console.log(0 =="")                   //true;
-   console.log(false ==0)                 //true;
-   console.log([1,2,3] =="1,2,3")         //true;
-   console.log("\n \n \t" ==0)             //true;
-   console.log(undefined ==null)           //true;
+console.log(3 =="3")                  // true;
+console.log(true ==1)                 // true;
+console.log(0 =="")                   // true;
+console.log(false ==0)                // true;
+console.log([1,2,3] =="1,2,3")        // true;
+console.log("\n \n \t" ==0)           // true;
+console.log(undefined ==null)         // true;
 {% endhighlight %}
 

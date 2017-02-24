@@ -1,7 +1,7 @@
 ---
 layout: post
-title: Creating Custom Directives
-date:   2016-04-28 11:28:00
+title: Creating Custom Directives, Part 1
+date:   2016-12-23 11:28:00
 tags: Angular JavaScript
 subclass: 'post tag-Angular tag-JavaScript'
 categories: 'JavaScript'
@@ -20,27 +20,96 @@ logo: 'assets/images/ghost.png'
 <p>We need to write Custom directives for a fragment that will be needed to connect to more than one controller, or it needs to be rendered differently in different parameters. Custom directives are also ideal if there will be DOM manipulation on the reusable part.
 <p>
 <h3 id="heading3">How to Write a Custom Directive</h3>
+First, We need to register it tp an angular module using module.directive API passing the name of the direcitve and a factory function.
+The name of the directive is in a camelCase format and it gets normalizes to a snack-case in the view(HTML), when it's invoked. Let's say I have a module named app.users and I want to add a directive to that module. Following John Papa's style guide:
 
-{% highlight html %}
-<form name="signupForm" novalidate>
-  <input name="username"type="text" ng-model="username">
-  <input name="email" type="email" ng-model="email">
-  <input name="password" placeholder="Password" ng-model="pwd">
-  <input type="submit" value='Submit'>
-</form>
+{% highlight javascript %}
+angular
+  .module('app.users')
+  //directive takes the name of the directive and function
+  .directive('userElement', userElement);
 {% endhighlight %}
-<p>We can also easly validate a proper email format by specifying the type of the input field. To show an error message when invalid email is entered, We just add an element with ng-directive that is given a value of email.</p>
+<p>It is in the factory function that we define the Directive Definition Object and we return it. The object takes a number of options as a property that determine the specificties of the directive. Some of the options are:
+
+<h6 id="heading6">Restrict</h6>
+<p>The restrict option is used to specify how a directive can be invoked on the page. There are four different ways in which a directive can be rendered to the page, so restrict property can be given any of these values. Its a good practice to use only 'A' and 'E' though.</p>
+<ol>
+<li>'A' value => gets rendered as an attribute</li>
+<li>'E' value => gets rendered as an element</li>
+<li>'C' value => gets added as class of the given element></li>
+<li>'M' value => gets added as comment</li>
+</ol>
 {% highlight html %}
-<form name="signupForm" novalidate>
-  <input name="email" type="email" ng-model="email" required>
-  <div ng-messages="signupForm.email.$error" ng-show="signupForm.email.$touched">
-    <p ng-message="required">Email is required</p>
-    <p ng-message="email">Please enter valid email address</p>
-  </div>
-</form>
+<!-- Attribute directive -->
+<li user-element><li>
+<!-- Element directive -->
+<user-element></user-element>
+<!-- Class directive -->
+<li class="user-element"></li>
+<!-- Comment directive -->
+<!--directive: user-element -->
+{% endhighlight %}
+<h6 id="heading6">Replace</h6>
+The 'replace' property if it sets to true, replaces the element to which the directive is being applied with the directiv's template. The default value is <code>false</code>, in that case, the template is loaded as a child of the element to which the directive is being applied.
+This is what we see if we inspect the element in both cases.
+{% highlight html %}
+<!-- replace: true -->
+<li>
+  <h3 class="ng-binding">Leanne Graham</h3>
+  <h5 class="ng-binding">Sincere@april.biz</h5>
+</li>
+{% endhighlight %}
+{% highlight html %}
+<!-- replace: false -->
+<user-element>
+  <li>
+    <h3 class="ng-binding">Leanne Graham</h3>
+    <h5 class="ng-binding">Sincere@april.biz</h5>
+  </li>
+</user-element>
 {% endhighlight %}
 
-<p>Utilizing ngMessages reduces the amount of code and logic that was used to showcase error messages. Here is the complete simple form that uses ngMessages to validate forms:</p>
+<h6 id="heading6">Transclude</h6>
+<p>If the element that loads the directive has any child elements, They normally will be gone and replaced by the template of the directive. We set the transclude option to true if we want to get hold of the children of the element</p>
+<h6 id="heading6">templateUrl</h6>
+<p> We can define our content inline using the template option. or in most cases if the content is big and uses a lot of markup its better to separate it in its own file and load it using templateUrl</p>
+<h6 id="heading6">Scope</h6>
+<p>To use a custom directive to its fullest potential, we need to make sure its independent of the  parent controller/scope. The scope option help us to isolate the scope of the directive. However, we still have a way to pass data from the outer scope by using @, =, and & symbols.  the '@' symbole for one way data binding. i.e change on the directive won't update the parent scope. We use '=' for two way data binding, and '&' to pass down functions.</p>
+{% highlight javascript %}
+angular
+  .module('app.users')
+  .directive('userElement', userElement);
 
-<p data-height="368" data-theme-id="dark" data-slug-hash="KrYkLr" data-default-tab="result" data-user="nassir" data-embed-version="2" class="codepen">See the Pen <a href="http://codepen.io/nassir/pen/KrYkLr/">Angular Form Validation</a> by nassir (<a href="http://codepen.io/nassir">@nassir</a>) on <a href="http://codepen.io">CodePen</a>.</p>
-<script async src="//assets.codepen.io/assets/embed/ei.js"></script>
+function userElement() {
+  //Directive Definition Object
+  var directive = {
+    restrict: 'EA',
+    replace: true,
+    templateUrl: 'components/users/usersView.html',
+    scope: {
+      userInfo: '=',
+    },
+  }
+  return directive;
+}
+{% endhighlight %}
+<p>And finally this is how you invoke the directive in the element intended</p>
+{% highlight html %}
+<div class="col-md-6 col-md-offset-3">
+  <ul>
+    <!-- name of the directive normalizes to snake case -->
+    <user-element ng-repeat="user in usersCtrl.users" user-info="user"></user-element>
+  </ul>
+</div>
+{% endhighlight %}
+<p> I will explain the different life cycle functions of a directive in part 2.</p>
+
+
+
+
+
+
+
+
+
+
