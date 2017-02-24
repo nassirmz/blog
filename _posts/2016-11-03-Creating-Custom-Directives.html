@@ -12,7 +12,7 @@ logo: 'assets/images/ghost.png'
 
 <h3 id="heading3">What are Directives?</h3>
 
-<p>Directives are JavaScript functions that manipulate and add behaviors to HTML DOM elements. AngularJS extends HTML by providing directives that add functionaliaty to your markup and allow you to create powerful dynamic templates. Angular comes with numerous built in directives such as ngModel, ngController, ngApp, ngShow, ngIf, and ngRepeat. Angular also let's us build our own custom directives. Custom directives can be an element directive, an attribute directive, a Class directive, and even a comment directive.</p>
+<p>Directives are JavaScript functions that manipulate and add behaviors to HTML DOM elements. AngularJS extends HTML by providing directives that add functionality to your markup and allow you to create powerful dynamic templates. Angular comes with numerous built in directives such as ngModel, ngController, ngApp, ngShow, ngIf, and ngRepeat. Angular also let's us build our own custom directives. Custom directives can be an element directive, an attribute directive, a Class directive, and even a comment directive.</p>
 
 <h3 id="heading3">Why Do We Need a Custom Directives?</h3>
 
@@ -72,9 +72,9 @@ This is what we see if we inspect the element in both cases.
 <h6 id="heading6">Transclude</h6>
 <p>If the element that loads the directive has any child elements, They normally will be gone and replaced by the template of the directive. We set the transclude option to true if we want to get hold of the children of the element</p>
 <h6 id="heading6">templateUrl</h6>
-<p> We can define our content inline using the template option. or in most cases if the content is big and uses a lot of markup its better to separate it in its own file and load it using templateUrl</p>
+<p> We can define our content inline using the template option. or in most cases, if the content is big and uses a lot of markups its better to separate it in its own file and load it using templateUrl</p>
 <h6 id="heading6">Scope</h6>
-<p>To use a custom directive to its fullest potential, we need to make sure its independent of the  parent controller/scope. The scope option help us to isolate the scope of the directive. However, we still have a way to pass data from the outer scope by using @, =, and & symbols.  the '@' symbole for one way data binding. i.e change on the directive won't update the parent scope. We use '=' for two way data binding, and '&' to pass down functions.</p>
+<p>To use a custom directive to its fullest potential, we need to make sure its independent of the parent controller/scope. The scope option helps us to isolate the scope of the directive. However, we still have a way to pass data from the outer scope by using @, =, and & symbols.  the '@' symbole for one way data binding. i.e change on the directive won't update the parent scope. We use '=' for two way data binding, and '&' to pass down functions.</p>
 {% highlight javascript %}
 angular
   .module('app.users')
