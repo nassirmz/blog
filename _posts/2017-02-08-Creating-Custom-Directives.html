@@ -1,0 +1,26 @@
+---
+layout: post
+title: Creating Custom Directives, Part 2
+date:   2016-12-23 11:28:00
+tags: Angular JavaScript
+subclass: 'post tag-Angular tag-JavaScript'
+categories: 'JavaScript'
+navigation: True
+logo: 'assets/images/ghost.png'
+---
+<p>there are three life cycle directive functions: copile
+<h6 id="heading6">Compile</h6>
+
+<p>The compile function is first to run to compile the directive into a template element. It is used to manipulate the template element on the fly prior being assigned a scope. The built in ngIf and ngSwitch use the compile function whether to remove the template element or to add it to the DOM. ngRepeat also runs through the directive first using the compile function before each instance with their own scope are added to the DOM. So the compile function takes the element and attributes as its arguments and returns an object with the pre and post link function.</p>
+
+<h6 id="heading6">pre-link</h6>
+After the compile function runs. Angular again traverses the DOM recursively to run the defined pre-link to link each element to its scope. Therefore the scope is available when per link is called it's actually the first argument passed to the function. However, if for example, we have deeply nested directives. the children element's scopes won't be available on the parent's per link. For that reason, it's better to perform a DOM manipulation on post-link instead of pre-link.</p>
+
+<h6 id="heading6">post-link</h6>
+<p>After every directive is compiled and linked to its scope, post-link runs in reverse order starting from the innermost directive to the outermost directive. Since most directives only deal with a specific DOM element and its scope, This where it's safe to perform DOM manipulation. In this phase, we already know the parent's children elements and their scope. If we don't need a compile function in our directive. We use a link function as a standalone(not returned from a compile function) to define the post-link. the post-link takes the scope, element, and attribute, in that order as its arguments.</p>
+
+{% highlight html %}
+{% endhighlight %}
+
+{% highlight javascript %}
+{% endhighlight %}
