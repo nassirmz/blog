@@ -1,0 +1,141 @@
+---
+layout: post
+title: Authenticating React Apps, Part 1
+date:   2017-03-09 11:28:00
+tags: React JavaScript
+subclass: 'post tag-React tag-JavaScript'
+categories: 'JavaScript'
+navigation: True
+logo: 'assets/images/ghost.png'
+---
+<p>When ever you are building a web or mobile apps, it's imminent that you have to personalize it to users by adding signin and signup pages. We will see how to authenticate React Apps using the whole React ecosystem, i.e Redux for state container, Webpack for bundling, and babel for transpling JSX and ES6 codes.</p>
+
+<h3 id="heading3">Installing Dependencies.</h3>
+
+<p>Add the following dependencies to your devDependecies:</p>
+{% highlight javascript %}
+npm i -D babel-core babel-loader babel-preset-es2015 babel-preset-react babel-preset-stage-0 webpack html-webpack-plugin
+{% endhighlight javascript l%}
+<p>Add the following libraries to your dependency:</p>
+{% highlight javascript %}
+npm i -S react react-dom react-router react-redux redux redux-form redux-thunk react-bootstrap axios prop-types path lodash
+{% endhighlight javascript l%}
+<p>To brief about what are these dependencies and why we need them:</p>
+<ul>
+<li>react and react-dom are react libraries. ReactDOM is sole purpose is to render your react app into the DOM. It was separataed from Core React Module, for React was also used in another plateforms beyond the DOM or the browser.</li>
+<li>react-router deals with UI routing.</li>
+<li>redux, redux-thunk, and redux-form are our state containers that strictley follow unidirectional data flow.</li>
+<li>axios is a promise based library that makes HTTP requests from the browser seamless.</li>
+<li>react-bootstrap is a library that gives us bootstrap styled react components.</li>
+<li>babel-core, babel-loader are our core babel loaders</li>
+<li>babel-preset-es2015 is for compiling ES6 codes and babel-preset-react is for JSX transpiling. babel-preset-stage-0 is the most inclusinve of the stages of babel with a lot of features included from ES7 like async/await.</li>
+</ul>
+
+<h3 id="heading3">HELLO WORLD</h3>
+
+<p>Our components are going to be modularized and will use ES6 and JSX code heavily. Before we output HELLO WORLD to the browser, using Babel and Webpack we need to traspile and bundle react files to a javascript a browser can understand. To do this we need a config file called webpack.config.js that takes an entry point and bundles all codes into an output file.</p>
+<span>webpack.config.js</span>
+
+{% highlight javascript %}
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+
+const config = {
+  entry: './src/index.jsx',
+  output: {
+    path: path.resolve(__dirname, 'build'),
+    filename: 'bundle.js'
+  },
+
+  resolve: {
+    extensions: ['.js', '.jsx']
+  },
+  module: {
+    rules: [
+      { test: /\.(js|jsx)$/, use: 'babel-loader' }
+    ]
+  },
+  plugins: [
+    new HtmlWebpackPlugin({ template: './build/index.html' })
+  ]
+}
+
+module.exports = config;
+{% endhighlight %}
+
+<p>Webpack does more than bundling and transpiling. But this is the minimal that we need to run our code. It takes an entry file and transpiles it using the rules we specify for each file types in the module object, then bundles it into a file that (sits in a build folder in our case, as specified in the output object).  We also need a .babelrc file to specify the needed plugind and presets for babel transformation.</p>
+<span>.babelrc</span>
+
+{% highlight javascript %}
+{
+  "presets": ["react", "es2015", "stage-0"],
+  "plugins": ["transform-object-rest-spread"]
+}
+{% endhighlight %}
+
+<p>Now of to our HELLO WORLD. First, lets see how our app structure looks like</p>
+<p>
+├── build</br>
+│   └── index.html</br>
+├── package-lock.json</br>
+├── package.json</br>
+├── src</br>
+│   ├── components</br>
+│   │   └── App.jsx</br>
+│   └── index.jsx</br>
+├── webpack.config.js</br>
+└── .babelrc</br>
+
+</p>
+
+<span>App.jsx, stateless functional compnent</span>
+{% highlight javascript %}
+import React from 'react';
+
+const App = () => {
+  return <div>Hello World</div>
+};
+{% endhighlight %}
+
+<p>We need to import it and render it to the DOM using ReactDOM's render function which takes a react app and the node it will be mounted to.</p>
+<span>index.jsx</span>
+{% highlight javascript %}
+import React from 'react';
+import ReactDOM from 'react-dom';
+
+import App from './components/App';
+
+ReactDOM.render(
+    <App />,
+  document.getElementById('root')
+);
+{% endhighlight %}
+
+<p>The html element with the root id lives in our main html that will be served to the browser. It is in this html we put the script tag for the bundled single js file. In our case htmlwebpackplugin of webpack will put the bundled file for us. So we don't have to use the manual inserting. We configure this in the webpack.config.js inside the plugins object.</p>
+
+<span>build/index.html</span>
+{% highlight html %}
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>React Redux Starter</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+</html>
+{% endhighlight %}
+
+<p>To be continued...</p>
+
+
+
+
+
+
+
+
+
+
+
