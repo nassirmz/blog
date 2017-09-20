@@ -1,7 +1,7 @@
 ---
 layout: post
 title: Creating Custom Directives, Part 2
-date:   2016-12-23 11:28:00
+date:   2017-02-08 11:28:00
 tags: Angular JavaScript
 subclass: 'post tag-Angular tag-JavaScript'
 categories: 'JavaScript'
@@ -18,9 +18,3 @@ After the compile function runs. Angular again traverses the DOM recursively to 
 
 <h6 id="heading6">post-link</h6>
 <p>After every directive is compiled and linked to its scope, post-link runs in reverse order starting from the innermost directive to the outermost directive. Since most directives only deal with a specific DOM element and its scope, This where it's safe to perform DOM manipulation. In this phase, we already know the parent's children elements and their scope. If we don't need a compile function in our directive. We use a link function as a standalone(not returned from a compile function) to define the post-link. the post-link takes the scope, element, and attribute, in that order as its arguments.</p>
-
-{% highlight html %}
-{% endhighlight %}
-
-{% highlight javascript %}
-{% endhighlight %}

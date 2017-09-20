@@ -1,0 +1,159 @@
+---
+layout: post
+title: Comparing Different Classifier Machine Learning Algorithms
+date:   2017-09-16 11:28:00
+tags: Data_Science Machine_Learning Logistic_Regression Decision_Trees Support_Vector_Machines Naive_Bayes_Algorithms
+subclass: 'post tag-Data-Science tag-Machine-Learning'
+categories: 'Data Science'
+navigation: True
+logo: 'assets/images/ghost.png'
+---
+<style>
+  .post {
+    max-width: 1024px;
+  }
+  td, th {
+    max-width: 300px;
+  }
+  td, p, ul, li {
+    font-size: 16px;
+  },
+
+</style>
+<table>
+  <tr>
+    <th>Type</th>
+    <th>Description</th>
+    <th>Strengths</th>
+    <th>DrawBacks</th>
+    <th>Applications</th>
+  </tr>
+  <tr>
+    <th>Gaussian Naive Bayes</th>
+    <td>
+      Computing a probability of an event based on the probabilities of certain related events. Naive means the events are independent of each other
+    </td>
+    <td>
+      <li>Extremely fast</li>
+      <li>Needs relatively small amount of data</li>
+      <li>Robust to outliers and missing data</li>
+    </td>
+    <td>
+      <li>Assumes every feature is independent of others</li>
+      <li>Bad estimator in a larger data set</li>
+    </td>
+    <td>
+      <li>Spam filtering</li>
+      <li>Document classification</li>
+    </td>
+  </tr>
+  <tr>
+    <th>Decision Trees</th>
+    <td>
+      Computes using tree-like structure. where each node/leave in the tree is a classifier
+    </td>
+    <td>
+      <li>Easy to conceptualize and implement</li>
+      <li>Can handle mixed type of features(categorical and numerical</li>
+      <li>So, requires little data preparation</li>
+    </td>
+    <td>
+      <li>Tends to overfit easily</li>
+      <li>Can be unstable. small variations can output unlikely classifications</li>
+    </td>
+    <td>
+      <li>Medical diagnosis</li>
+      <li>Customer profiling</li>
+      <li>And many other use cases in different fields</li>
+    </td>
+  </tr>
+  <tr>
+    <th>Logistic Regression</th>
+    <td>
+      A regression model that makes predictions using probability
+    </td>
+    <td>
+      <li>Low computation cost</li>
+      <li>Works well in small data set</li>
+      <li>Works well when there is noise in the data</li>
+    </td>
+    <td>
+      <li>Not quite a good model for nonlinearly separated data</li>
+      <li>Note quite good for a data with large features</li>
+    </td>
+    <td>
+      <li>Medical field</li>
+      <li>Educational and research</li>
+    </td>
+  </tr>
+  <tr>
+    <th>Support Vector Machines</th>
+    <td>
+      A mathematically elegant algorithm which tries to maximize the decision boundary between the classes to be classified
+    </td>
+    <td>
+      <li>Can learn complex functions and deal with outliers nicely</li>
+      <li>SVM's with nonlinear kernels perform quite excellent</li>
+      <li>SVM's perform quite excellent sometimes in par with Ensemble methods</li>
+    </td>
+    <td>
+      <li>High computational cost</li>
+      <li>Choosing the right kernel might be difficult</li>
+    </td>
+    <td>
+      <li>Text categorization</li>
+      <li>Biological and other sciences</li>
+    </td>
+  </tr>
+  <tr>
+    <th>Random Forest</th>
+    <td>
+      A bagging ensemble method(build a strong model taking the mean of trained individual models)
+    </td>
+    <td>
+      <li>Performs well in any dataset type</li>
+      <li>Often outperforms other single classifiers</li>
+      <li>Can handle high dimensional features</li>
+    </td>
+    <td>
+      <li>Might be hard to implement, maintain, modify</li>
+      <li>Has more hyperparameters to tune</li>
+    </td>
+    <td>
+      <li>Very popular in Data Science competition</li>
+      <li>Different fields of Sciences</li>
+    </td>
+  </tr>
+  <tr>
+    <th>AdaBoost</th>
+    <td>
+      A boosting ensemble method(build a strong model taking the weighted mean of trained individual models)
+    </td>
+    <td>
+      <li>Performs well in any dataset type</li>
+      <li>Often outperforms other single classifiers</li>
+      <li>Can handle high dimensional features</li>
+    </td>
+    <td>
+      <li>Might be hard to implement, maintain, modify, even harder than bagging ensembles</li>
+      <li>Has more hyperparameters to tune</li>
+      <li>Prone to overfitting</li>
+    </td>
+    <td>
+      <li>Very popular in Data Science competition</li>
+      <li>Different fields of Sciences</li>
+    </td>
+  </tr>
+</table>
+
+
+
+
+
+
+
+
+
+
+
+
